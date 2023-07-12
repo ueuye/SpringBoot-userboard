@@ -1,7 +1,5 @@
 package com.goodee.mvcBoard.controller;
 
-import java.net.http.HttpRequest;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -18,16 +16,18 @@ public class LoginController {
 		// service(memberId, memberPw) -> mapper -> 로그인 성공 유무 반환
 		
 		// 로그인 성공시
-		session.setAttribute(memberId, memberPw); // 로그인 정보 저장
+		session.setAttribute("memberId", memberId); // 로그인 정보 저장
+		session.setAttribute("memberPw", memberPw);
 		
-		return "redirect:/";
+		return "redirect:/home";
 	}
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		
 		session.invalidate();
 		
-		return "redirect:/";
+		return "redirect:/login";
 	}
 	
 }
