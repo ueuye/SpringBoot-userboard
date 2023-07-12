@@ -45,4 +45,20 @@ public class BoardService {
 		
 		return resultMap;
 	}
+	
+	public int addBoard(Board board) {
+		return boardMapper.insertBoard(board);
+	}
+	
+	public int removeBoard(Board board) {
+		return boardMapper.deleteBoard(board);
+	}
+	
+	public int modifyBoard(Board board) {
+		return boardMapper.updateBoard(board);
+	}
+	
+	public Board getBoardOne(Board board) {
+		return boardMapper.selectBoardOne(board);
+	}
 }

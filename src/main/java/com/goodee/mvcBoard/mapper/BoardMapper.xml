@@ -25,4 +25,51 @@
 	<select id="selectBoardCount" resultType="int">
 		SELECT count(*) FROM board
 	</select>
+	
+	<insert id="insertBoard" parameterType="com.goodee.mvcBoard.vo.Board">
+		INSERT INTO board(
+			local_name,
+			board_title,
+			board_content,
+			member_id,
+			createdate,
+			updatedate
+		)VALUES(
+			#{localName},
+			#{boardTitle},
+			#{boardContent},
+			#{memberId},
+			NOW(),
+			NOW()
+		)
+	</insert>
+	
+	<delete id="deleteBoard" parameterType="com.goodee.mvcBoard.vo.Board">
+		DELETE FROM board 
+		WHERE board_no = #{boardNo}
+		AND member_id = #{memberId}
+	</delete>
+	
+	<update id="updateBoard" parameterType="com.goodee.mvcBoard.vo.Board">
+		UPDATE board
+		SET local_name = #{localName},
+			board_title = #{boardTitle},
+			board_content = #{boardContent}
+		WHERE board_no = #{boardNo}
+		AND member_id = #{memberId}
+	</update>
+	
+	<select id="selectBoardOne" parameterType="com.goodee.mvcBoard.vo.Board"
+			resultType="com.goodee.mvcBoard.vo.Board">
+		SELECT 
+			board_no boardNo, 
+			local_name localName,
+			board_title boardTitle,
+			board_content boardContent,
+			member_id memberId,
+			createdate,
+			updatedate 
+		FROM board
+		WHERE board_no = #{boardNo}
+	</select>
 </mapper>

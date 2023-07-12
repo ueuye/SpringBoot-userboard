@@ -20,4 +20,12 @@ public interface BoardMapper {
 	
 	// 전체 행의 수
 	int selectBoardCount();
+	
+	int insertBoard(Board board);
+	
+	int deleteBoard(Board board);
+	
+	int updateBoard(Board board);
+	
+	Board selectBoardOne(Board board);
 }

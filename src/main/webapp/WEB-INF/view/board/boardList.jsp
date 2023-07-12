@@ -8,6 +8,7 @@
 </head>
 <body>
 	<h1>게시판</h1>
+	<div><a href="/board/addBoard">게시물추가</a></div>
 	<div>
 		<c:forEach var="m" items="${localNameList}">
 			<a href="">${m.localName}(${m.cnt})</a>
