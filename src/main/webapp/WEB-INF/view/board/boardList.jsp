@@ -11,7 +11,7 @@
 	<div><a href="/board/addBoard">게시물추가</a></div>
 	<div>
 		<c:forEach var="m" items="${localNameList}">
-			<a href="">${m.localName}(${m.cnt})</a>
+			<a href="/board/boardList?localName=${m.localName }">${m.localName}(${m.cnt})</a>
 		</c:forEach>
 	</div>
 	

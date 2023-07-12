@@ -18,6 +18,11 @@
 			member_id memberId,
 			createdate
 		FROM board
+		<where>
+			<if test="localName != null &amp;&amp; localName != ''">
+				local_name = #{localName}
+			</if>
+		</where>
 		ORDER BY createdate DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>

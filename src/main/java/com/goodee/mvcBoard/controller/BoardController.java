@@ -69,9 +69,13 @@ public class BoardController {
 	@GetMapping("/board/boardList")
 	public String boardList(Model model, 
 							// 형변환을 따로 안해도 된다. null값이 넘어오면 defaultValue값으로 저장
-							@RequestParam(value = "currentPage", defaultValue = "1") int currentPage, 
-							@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage) {
-		Map<String, Object> resultMap= boardService.getBoardList(currentPage, rowPerPage);
+							@RequestParam(name = "currentPage", defaultValue = "1") int currentPage, 
+							@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage,
+							@RequestParam(name = "localName", required = false) String localName) {
+		
+		log.debug("\u001B[45m"+ localName +"\u001B[0m");
+		
+		Map<String, Object> resultMap= boardService.getBoardList(currentPage, rowPerPage, localName);
 		
 		// view로 넘길때는 다시 분리해서
 		model.addAttribute("localNameList",resultMap.get("localNameList")); // request.setAttribute() 와 비슷한 역할
