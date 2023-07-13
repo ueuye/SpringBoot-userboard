@@ -29,7 +29,7 @@
 		WHERE board_no = #{boardNo}
 	</select>
 	
-	<delete id="deleteBoardfile">
+	<delete id="deleteBoardfile" parameterType="com.goodee.mvcBoard.vo.Board">
 		DELETE FROM boardfile
 		WHERE board_no = ${boardNo}
 	</delete>

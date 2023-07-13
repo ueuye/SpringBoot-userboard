@@ -43,8 +43,9 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/modifyBoard")
-	public String modifyBoard(Board board) {
-		int row = boardService.modifyBoard(board);
+	public String modifyBoard(HttpServletRequest request, Board board) {
+		String path = request.getServletContext().getRealPath("/upload/");
+		int row = boardService.modifyBoard(board, path);
 		log.debug("\u001B[45m"+ row +"\u001B[0m");
 		return "redirect:/board/boardOne?boardNo="+board.getBoardNo();
 	}

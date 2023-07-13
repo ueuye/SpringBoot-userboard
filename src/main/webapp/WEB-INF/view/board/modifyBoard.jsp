@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +9,7 @@
 </head>
 <body>
 	<h1>게시물 수정</h1>
-	<form method="post" action="/board/modifyBoard" >
+	<form method="post" action="/board/modifyBoard" enctype="multipart/form-data">
 		<input type="hidden" name="boardNo" value="${board.boardNo }">
 		<table>
 			<tr>
@@ -32,6 +34,12 @@
 				<td>memberId</td>
 				<td>
 					<input type="text" name="memberId" value="${board.memberId }" readonly="readonly">
+				</td>
+			</tr>
+			<tr>
+				<td>fileupload</td>
+				<td>
+					<input type="file" name="multipartFile" multiple="multiple">
 				</td>
 			</tr>
 		</table>
