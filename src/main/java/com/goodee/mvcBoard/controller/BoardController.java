@@ -2,6 +2,8 @@ package com.goodee.mvcBoard.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +23,22 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("/board/boardOne")
-	public String boardOne(Model model,Board board) {
-		Board resultBoard = boardService.getBoardOne(board);
-		model.addAttribute("board",resultBoard);
+	public String boardOne(Model model, Board board) {
+		Map<String, Object> boardList = boardService.getBoardOne(board);
+		
+		model.addAttribute("board", boardList.get("board"));
+		model.addAttribute("boardFileList", boardList.get("boardFileList"));
 		return "/board/boardOne";
 	}
 	
 	@GetMapping("/board/modifyBoard")
 	public String modifyBoard(Model model, Board board) {
-		Board resultBoard = boardService.getBoardOne(board);
-		model.addAttribute("board",resultBoard);
+		Map<String, Object> boardList = boardService.getBoardOne(board);
+		
+		model.addAttribute("board", boardList.get("board"));
+		model.addAttribute("boardFileList", boardList.get("boardFileList"));
+		
+		//model.addAttribute("board",boardService.getBoardOne(board).get("board"));
 		return "/board/modifyBoard";
 	}
 	
@@ -47,8 +55,9 @@ public class BoardController {
 	}
 	
 	@PostMapping("board/removeBoard")
-	public String removeBoard(Board board) {
-		int row = boardService.removeBoard(board);
+	public String removeBoard(HttpServletRequest request, Board board) {
+		String path = request.getServletContext().getRealPath("/upload/");
+		int row = boardService.removeBoard(board, path);
 		log.debug("\u001B[45m"+ row +"\u001B[0m");
 		return "redirect:/board/boardList";
 	}
@@ -60,9 +69,10 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/addBoard")
-	public String addBoard(Board board) {
-		int row = boardService.addBoard(board);
-		log.debug("\u001B[45m"+ row +"\u001B[0m");
+	public String addBoard(HttpServletRequest request, Board board) { // 매개값으로 request객체를 받는다 <- request api 직접호출
+		String path = request.getServletContext().getRealPath("/upload/");
+		int row = boardService.addBoard(board, path);
+		log.debug("\u001B[45m"+ "row :" + row +"\u001B[0m");
 		return "redirect:/board/boardList";
 	}
 	
