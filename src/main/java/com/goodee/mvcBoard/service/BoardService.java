@@ -26,6 +26,11 @@ public class BoardService {
 	@Autowired
 	private BoardfileMapper boardfileMapper;
 	
+	// REST API chart 호출
+	public List<Map<String, Object>> getLocalNameList(){
+		return boardMapper.selectLocalNameList();
+	}
+	
 	public Map<String, Object> getBoardList(int currentPage, int rowPerPage, String localName){
 		
 		// service layer 역할1 : controller가 넘겨준 매개값을 Dao의 매개값형태에 맞게 가공
@@ -119,21 +124,23 @@ public class BoardService {
 	public int modifyBoard(Board board, String path) {
 		int row = boardMapper.updateBoard(board);
 		
-		// 저장된 파일 삭제
-		List<Boardfile> boardfileList = boardfileMapper.selectBoardfile(board);
-		if(row == 1 && boardfileList != null && boardfileList.size() > 0) {
-			for(Boardfile bf : boardfileList) {
-				File f = new File(path+bf.getSaveFilename());
-				if(f.exists()) {
-					f.delete();
-				}
-			}
-			// boardfile테이블에서 파일삭제
-			boardfileMapper.deleteBoardfile(board);
-		}
-		// board입력이 성공하고 첨부된 파일이 1개 이상이 있다면
+		// board수정이 성공하고 첨부된 파일이 1개 이상이 있다면
 		List<MultipartFile> fileList = board.getMultipartFile();
 		if(fileList != null && fileList.size() > 0) {
+			
+			// 저장된 파일 삭제
+			List<Boardfile> boardfileList = boardfileMapper.selectBoardfile(board);
+			if(row == 1 && boardfileList != null && boardfileList.size() > 0) {
+				for(Boardfile bf : boardfileList) {
+					File f = new File(path+bf.getSaveFilename());
+					if(f.exists()) {
+						f.delete();
+					}
+				}
+				// boardfile테이블에서 파일삭제
+				boardfileMapper.deleteBoardfile(board);
+			}
+			
 			int boardNo = board.getBoardNo();
 			
 			for(MultipartFile mf : fileList) { // 첨부된 파일의 개수만큼 반복
