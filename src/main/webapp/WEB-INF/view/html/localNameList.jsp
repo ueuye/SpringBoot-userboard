@@ -23,6 +23,7 @@
 					model -> ('model' : [{localName:'부산',cnt:10},
 									{localName:'서울',cnt:22}])
 				*/
+				console.log(model);
 				model.forEach(function(item, index){ 
 					$('#target').append('<tr>');
 					$('#target').append('<td>'+item.localName+'</td>');
